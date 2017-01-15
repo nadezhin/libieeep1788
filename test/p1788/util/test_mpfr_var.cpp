@@ -447,27 +447,27 @@ BOOST_AUTO_TEST_CASE(minimal_mpfr_root_si_test)
     mpfr_var<double> a;
     mpfr_var<double> x;
 
-    a.set(0x1.7DE3A077D1568p-8, MPFR_RNDN);
-    x.set(0x1.a333333333334p+3, MPFR_RNDN);
+    a.set(std::stod("0x1.7DE3A077D1568p-8"), MPFR_RNDN);
+    x.set(std::stod("0x1.a333333333334p+3"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_root_si(r(), a(), -2, MPFR_RNDU), 1);
     BOOST_CHECK(mpfr_equal_p(r(), x()));
-    x.set(0x1.a333333333333p+3, MPFR_RNDN);
+    x.set(std::stod("0x1.a333333333333p+3"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_root_si(r(), a(), -2, MPFR_RNDD), -1);
     BOOST_CHECK(mpfr_equal_p(r(), x()));
 
-    a.set(0x1.D26DF4D8B1831p-12, MPFR_RNDN);
-    x.set(0x1.a333333333334p+3, MPFR_RNDN);
+    a.set(std::stod("0x1.D26DF4D8B1831p-12"), MPFR_RNDN);
+    x.set(std::stod("0x1.a333333333334p+3"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_root_si(r(), a(), -3, MPFR_RNDU), 1);
     BOOST_CHECK(mpfr_equal_p(r(), x()));
-    x.set(0x1.a333333333333p+3, MPFR_RNDN);
+    x.set(std::stod("0x1.a333333333333p+3"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_root_si(r(), a(), -3, MPFR_RNDD), -1);
     BOOST_CHECK(mpfr_equal_p(r(), x()));
 
-    a.set(-0x1.D26DF4D8B1831p-12, MPFR_RNDN);
-    x.set(-0x1.a333333333333p+3, MPFR_RNDN);
+    a.set(std::stod("-0x1.D26DF4D8B1831p-12"), MPFR_RNDN);
+    x.set(std::stod("-0x1.a333333333333p+3"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_root_si(r(), a(), -3, MPFR_RNDU), 1);
     BOOST_CHECK(mpfr_equal_p(r(), x()));
-    x.set(-0x1.a333333333334p+3, MPFR_RNDN);
+    x.set(std::stod("-0x1.a333333333334p+3"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_root_si(r(), a(), -3, MPFR_RNDD), -1);
     BOOST_CHECK(mpfr_equal_p(r(), x()));
 }
@@ -498,13 +498,13 @@ BOOST_AUTO_TEST_CASE(minimal_mpfr_asin_npi)
     mpz_t npi;
     mpz_init(npi);
 
-    mpz_set_ui(npi, 1); 
-    a.set(0x1.fffffffffffffp-1, MPFR_RNDN);
-    x.set(0x1.921fb58442d19p0, MPFR_RNDN);
+    mpz_set_ui(npi, 1);
+    a.set(std::stod("0x1.fffffffffffffp-1"), MPFR_RNDN);
+    x.set(std::stod("0x1.921fb58442d19p0"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_asin_npi(a(), a(), npi, MPFR_RNDU), 1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
-    a.set(0x1.fffffffffffffp-1, MPFR_RNDN);
-    x.set(0x1.921fb58442d18p0, MPFR_RNDN);
+    a.set(std::stod("0x1.fffffffffffffp-1"), MPFR_RNDN);
+    x.set(std::stod("0x1.921fb58442d18p0"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_asin_npi(a(), a(), npi, MPFR_RNDD), -1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
 
@@ -519,23 +519,23 @@ BOOST_AUTO_TEST_CASE(minimal_mpfr_acos_npi)
     mpz_t npi;
     mpz_init(npi);
 
-    mpz_set_ui(npi, 0); 
+    mpz_set_ui(npi, 0);
     a.set(-1.0, MPFR_RNDN);
-    x.set(0x1.921fb54442d19p1, MPFR_RNDN);
+    x.set(std::stod("0x1.921fb54442d19p1"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_acos_npi(a(), a(), npi, MPFR_RNDU), 1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
     a.set(-1.0, MPFR_RNDN);
-    x.set(0x1.921fb54442d18p1, MPFR_RNDN);
+    x.set(std::stod("0x1.921fb54442d18p1"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_acos_npi(a(), a(), npi, MPFR_RNDD), -1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
 
-    mpz_set_ui(npi, 1); 
+    mpz_set_ui(npi, 1);
     a.set(-1.0, MPFR_RNDN);
-    x.set(0x1.921fb54442d19p1, MPFR_RNDN);
+    x.set(std::stod("0x1.921fb54442d19p1"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_acos_npi(a(), a(), npi, MPFR_RNDU), 1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
     a.set(-1.0, MPFR_RNDN);
-    x.set(0x1.921fb54442d18p1, MPFR_RNDN);
+    x.set(std::stod("0x1.921fb54442d18p1"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_acos_npi(a(), a(), npi, MPFR_RNDD), -1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
 
@@ -550,13 +550,13 @@ BOOST_AUTO_TEST_CASE(minimal_mpfr_atan_npi)
     mpz_t npi;
     mpz_init(npi);
 
-    mpz_set_si(npi, -1); 
+    mpz_set_si(npi, -1);
     a.set(16331239353195368L, MPFR_RNDN);
-    x.set(-0x1.921fb54442d18p0, MPFR_RNDN);
+    x.set(std::stod("-0x1.921fb54442d18p0"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_atan_npi(a(), a(), npi, MPFR_RNDU), 1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
     a.set(16331239353195368, MPFR_RNDN);
-    x.set(-0x1.921fb54442d19p0, MPFR_RNDN);
+    x.set(std::stod("-0x1.921fb54442d19p0"), MPFR_RNDN);
     BOOST_CHECK_EQUAL(p1788::util::mpfr_atan_npi(a(), a(), npi, MPFR_RNDD), -1);
     BOOST_CHECK(mpfr_equal_p(a(), x()));
 
