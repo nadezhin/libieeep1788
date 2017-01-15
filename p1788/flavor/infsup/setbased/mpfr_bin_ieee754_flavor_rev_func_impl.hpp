@@ -358,6 +358,7 @@ mpfr_bin_ieee754_flavor<T>::pown_rev(mpfr_bin_ieee754_flavor<T>::representation 
                 return empty();
 
             t_l = xl.subnormalize(util::mpfr_root_si(xl(), cu(), p, MPFR_RNDD), MPFR_RNDD);
+            if (mpfr_inf_p(cu())) t_l = -1;
 
             if (c.first <= 0)
                 mpfr_set_inf(xu(), 1);
@@ -404,11 +405,13 @@ mpfr_bin_ieee754_flavor<T>::pown_rev(mpfr_bin_ieee754_flavor<T>::representation 
                     mpfr_set_inf(xl(), -1);
                 else
                     t_l = xl.subnormalize(util::mpfr_root_si(xl(), cu(), p, MPFR_RNDD), MPFR_RNDD);
+                if (mpfr_inf_p(cu())) t_l = -1;
 
                 if (c.first == 0.0)
                     mpfr_set_inf(xu(), 1);
                 else
                     t_u = xu.subnormalize(util::mpfr_root_si(xu(), cl(), p, MPFR_RNDU), MPFR_RNDU);
+                if (mpfr_inf_p(cl())) t_u = 1;
 
                 representation r = representation(xl.template get<T>(MPFR_RNDD), xu.template get<T>(MPFR_RNDU));
 
@@ -421,11 +424,13 @@ mpfr_bin_ieee754_flavor<T>::pown_rev(mpfr_bin_ieee754_flavor<T>::representation 
             else
             {
                 t_u = xu.subnormalize(util::mpfr_root_si(xu(), cl(), p, MPFR_RNDU), MPFR_RNDU);
+                if (mpfr_inf_p(cl())) t_u = 1;
                 representation rn = representation(-std::numeric_limits<T>::infinity(), xu.template get<T>(MPFR_RNDU));
                 if (rn.second == x.first && t_u != 0)
                     rn = empty();
 
                 t_l = xl.subnormalize(util::mpfr_root_si(xl(), cu(), p, MPFR_RNDD), MPFR_RNDD);
+                if (mpfr_inf_p(cu())) t_l = -1;
                 representation rp = representation(xl.template get<T>(MPFR_RNDD), std::numeric_limits<T>::infinity());
                 if (x.second == rp.first && t_l != 0)
                     rp = empty();

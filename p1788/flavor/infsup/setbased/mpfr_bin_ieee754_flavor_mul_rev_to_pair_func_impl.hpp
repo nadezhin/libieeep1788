@@ -86,7 +86,9 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
             mpfr_var s_l;
 
             t_fu = f_u.subnormalize(mpfr_div(f_u(), cu(), bu(), MPFR_RNDU), MPFR_RNDU);
+            if (mpfr_inf_p(bu())) t_fu = 1;
             t_sl = s_l.subnormalize(mpfr_div(s_l(), cu(), bl(), MPFR_RNDD), MPFR_RNDD);
+            if (mpfr_inf_p(bl())) t_sl = -1;
 
             return std::pair<representation, representation>(representation(-std::numeric_limits<T>::infinity(), f_u.template get<T>(MPFR_RNDU)),
                     representation(s_l.template get<T>(MPFR_RNDD), std::numeric_limits<T>::infinity()));
@@ -99,6 +101,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
             mpfr_var u;
 
             t_fl = l.subnormalize(mpfr_div(l(), cu(), bl(), MPFR_RNDD), MPFR_RNDD);
+            if (mpfr_inf_p(bl())) t_fl = -1;
             t_fu = u.subnormalize(mpfr_div(u(), cl(), bu(), MPFR_RNDU), MPFR_RNDU);
 
             return std::pair<representation, representation>(representation(l.template get<T>(MPFR_RNDD), u.template get<T>(MPFR_RNDU)), empty());
@@ -109,6 +112,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
         {
             mpfr_var l;
             t_fl = l.subnormalize(mpfr_div(l(), cu(), bl(), MPFR_RNDD), MPFR_RNDD);
+            if (mpfr_inf_p(bl())) t_fl = -1;
 
             return std::pair<representation, representation>(representation(l.template get<T>(MPFR_RNDD), std::numeric_limits<T>::infinity()), empty());
         }
@@ -122,6 +126,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
 
             t_fl = l.subnormalize(mpfr_div(l(), cl(), bl(), MPFR_RNDD), MPFR_RNDD);
             t_fu = u.subnormalize(mpfr_div(u(), cu(), bu(), MPFR_RNDU), MPFR_RNDU);
+            if (mpfr_inf_p(bu())) t_fu = 1;
 
             return std::pair<representation, representation>(representation(l.template get<T>(MPFR_RNDD), u.template get<T>(MPFR_RNDU)), empty());
         }
@@ -131,6 +136,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
         {
             mpfr_var u;
             t_fu = u.subnormalize(mpfr_div(u(), cu(), bu(), MPFR_RNDU), MPFR_RNDU);
+            if (mpfr_inf_p(bu())) t_fu = 1;
 
             return std::pair<representation, representation>(representation(-std::numeric_limits<T>::infinity(), u.template get<T>(MPFR_RNDU)), empty());
         }
@@ -153,7 +159,9 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
             mpfr_var s_l;
 
             t_fu = f_u.subnormalize(mpfr_div(f_u(), cl(), bl(), MPFR_RNDU), MPFR_RNDU);
+            if (mpfr_inf_p(bl())) t_fu = 1;
             t_sl = s_l.subnormalize(mpfr_div(s_l(), cl(), bu(), MPFR_RNDD), MPFR_RNDD);
+            if (mpfr_inf_p(bu())) t_sl = -1;
 
             return std::pair<representation, representation>(representation(-std::numeric_limits<T>::infinity(), f_u.template get<T>(MPFR_RNDU)),
                     representation(s_l.template get<T>(MPFR_RNDD), std::numeric_limits<T>::infinity()));
@@ -168,6 +176,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
 
             t_fl = l.subnormalize(mpfr_div(l(), cu(), bu(), MPFR_RNDD), MPFR_RNDD);
             t_fu = u.subnormalize(mpfr_div(u(), cl(), bl(), MPFR_RNDU), MPFR_RNDU);
+            if (mpfr_inf_p(bl())) t_fu = 1;
 
             return std::pair<representation, representation>(representation(l.template get<T>(MPFR_RNDD), u.template get<T>(MPFR_RNDU)), empty());
         }
@@ -177,6 +186,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
         {
             mpfr_var u;
             t_fu = u.subnormalize(mpfr_div(u(), cl(), bl(), MPFR_RNDU), MPFR_RNDU);
+            if (mpfr_inf_p(bl())) t_fu = 1;
 
             return std::pair<representation, representation>(representation(-std::numeric_limits<T>::infinity(), u.template get<T>(MPFR_RNDU)), empty());
         }
@@ -189,6 +199,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
             mpfr_var u;
 
             t_fl = l.subnormalize(mpfr_div(l(), cl(), bu(), MPFR_RNDD), MPFR_RNDD);
+            if (mpfr_inf_p(bu())) t_fl = -1;
             t_fu = u.subnormalize(mpfr_div(u(), cu(), bl(), MPFR_RNDU), MPFR_RNDU);
 
             return std::pair<representation, representation>(representation(l.template get<T>(MPFR_RNDD), u.template get<T>(MPFR_RNDU)), empty());
@@ -199,6 +210,7 @@ mpfr_bin_ieee754_flavor<T>::mul_rev_to_pair(int& t_fl, int& t_fu, int& t_sl, int
         {
             mpfr_var l;
             t_fl = l.subnormalize(mpfr_div(l(), cl(), bu(), MPFR_RNDD), MPFR_RNDD);
+            if (mpfr_inf_p(bu())) t_fl = -1;
 
             return std::pair<representation, representation>(representation(l.template get<T>(MPFR_RNDD), std::numeric_limits<T>::infinity()), empty());
         }

@@ -677,6 +677,7 @@ BOOST_AUTO_TEST_CASE(minimal_pown_rev_bin_test)
     BOOST_CHECK_EQUAL( F<double>::pown_rev(REP<double>(0.0,INF_D), REP<double>(-5.1,-0.1), -2), REP<double>(-5.1,-0.1) );
     BOOST_CHECK( F<double>::is_empty( F<double>::pown_rev(REP<double>(0.0,0.0), REP<double>(27.2,55.1), -2) ) );
     BOOST_CHECK( F<double>::is_empty(F<double>::pown_rev(REP<double>(std::stod("0X1.3F0C482C977C9P-17"),INF_D), REP<double>(-INF_D,-MAX_D), -2) ) );
+    BOOST_CHECK( F<double>::is_empty(F<double>::pown_rev(REP<double>(1.0,INF_D), REP<double>(0,0), -2) ) );
     BOOST_CHECK_EQUAL( F<double>::pown_rev(REP<double>(std::stod("0X1.793D85EF38E47P-3"),std::stod("0X1.388P+13")), REP<double>(1.0,INF_D), -2), REP<double>(1.0,std::stod("0x1.2a3d70a3d70a5p+1")) );
     BOOST_CHECK_EQUAL( F<double>::pown_rev(REP<double>(std::stod("0X1.1BA81104F6C8P-2"),std::stod("0X1.25D8FA1F801E1P+3")), REP<double>(-INF_D,-1.0), -2), REP<double>(std::stod("-0x1.e666666666667p+0"),-1.0) );
 
@@ -690,6 +691,10 @@ BOOST_AUTO_TEST_CASE(minimal_pown_rev_bin_test)
     BOOST_CHECK_EQUAL( F<double>::pown_rev(F<double>::entire(), REP<double>(-5.1,55.5), -3), REP<double>(-5.1,55.5) );
     BOOST_CHECK( F<double>::is_empty( F<double>::pown_rev(REP<double>(0.0,0.0), REP<double>(-5.1,55.5), -3) ) );
     BOOST_CHECK( F<double>::is_empty( F<double>::pown_rev(REP<double>(-INF_D,0.0), REP<double>(5.1,55.5), -3) ) );
+    BOOST_CHECK( F<double>::is_empty(F<double>::pown_rev(REP<double>(1.0,INF_D), REP<double>(-INF_D,0), -3) ) );
+    BOOST_CHECK( F<double>::is_empty(F<double>::pown_rev(REP<double>(-INF_D,-3.0), REP<double>(0,INF_D), -3) ) );
+    BOOST_CHECK( F<double>::is_empty(F<double>::pown_rev(REP<double>(-1.0,INF_D), REP<double>(-0.5,0), -3) ) );
+    BOOST_CHECK( F<double>::is_empty(F<double>::pown_rev(REP<double>(-INF_D,3.0), REP<double>(0,0.5), -3) ) );
     BOOST_CHECK_EQUAL( F<double>::pown_rev(REP<double>(-INF_D,-0.0), REP<double>(-32.0,1.1), -3), REP<double>(-32.0,0.0) );
 
     BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::none_bit);
@@ -1915,6 +1920,21 @@ BOOST_AUTO_TEST_CASE(minimal_mul_rev_test)
     BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(F<double>::empty(), REP<double>(1.0, 2.0))  ) );
     BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(1.0, 2.0), F<double>::empty())  ) );
     BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(F<double>::empty(), F<double>::empty())  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(1.0,INF_D), REP<double>(1.0,INF_D), REP<double>(-INF_D,0.0))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(0.0,INF_D), REP<double>(1.0,INF_D), REP<double>(-INF_D,0.0))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-1.0,INF_D), REP<double>(1.0,INF_D), REP<double>(-0.75,0.0))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,INF_D), REP<double>(1.0,INF_D), REP<double>(0.0,0.0))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,1.0), REP<double>(1.0,INF_D), REP<double>(0.0,0.75))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,0.0), REP<double>(1.0,INF_D), REP<double>(0.0,INF_D))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,-1.0), REP<double>(1.0,INF_D), REP<double>(0.0,INF_D))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(1.0,INF_D), REP<double>(-INF_D,-1.0), REP<double>(0.0,INF_D))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(1.0,INF_D), REP<double>(-INF_D,-1.0), REP<double>(0.0,INF_D))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(0.0,INF_D), REP<double>(-INF_D,-1.0), REP<double>(0.0,INF_D))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-1.0,INF_D), REP<double>(-INF_D,-1.0), REP<double>(0.0,0.75))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,INF_D), REP<double>(-INF_D,-1.0), REP<double>(0.0,0.0))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,1.0), REP<double>(-INF_D,-1.0), REP<double>(-0.75,0.0))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,0.0), REP<double>(-INF_D,-1.0), REP<double>(-INF_D,0.0))  ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::mul_rev(REP<double>(-INF_D,-1.0), REP<double>(-INF_D,-1.0), REP<double>(-INF_D,0.0))  ) );
 
     BOOST_CHECK_EQUAL( F<double>::mul_rev(REP<double>(-2.0, -0.1), REP<double>(-2.1, -0.4)) ,  REP<double>(std::stod("0X1.999999999999AP-3"), std::stod("0X1.5P+4")) );
     BOOST_CHECK_EQUAL( F<double>::mul_rev(REP<double>(-2.0, 0.0), REP<double>(-2.1, -0.4)) ,  REP<double>(std::stod("0X1.999999999999AP-3"), INF_D) );
