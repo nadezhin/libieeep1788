@@ -1742,7 +1742,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[ Empty  ]_trv");
+        std::istringstream is("[ EMPTY  ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK( F<double>::is_empty(i) );
         BOOST_CHECK(is);
@@ -1750,10 +1750,10 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[ Empty  ]_ill");
+        std::istringstream is("[ EmptY  ]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK( F<double>::is_empty(i) );
+        BOOST_CHECK(is);
     }
 
     {
@@ -1767,15 +1767,15 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[  ]_com");
+        std::istringstream is("[]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK( F<double>::is_empty(i) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i;
-        std::istringstream is("[  ]_trv");
+        std::istringstream is("[\t]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK( F<double>::is_empty(i) );
         BOOST_CHECK(is);
@@ -1792,7 +1792,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[,]_trv");
+        std::istringstream is("[,\t]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, F<double>::entire());
         BOOST_CHECK(is);
@@ -1800,58 +1800,58 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[,]_com");
+        std::istringstream is("[ ,]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,INF_D) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i;
         std::istringstream is("[ entire  ]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL(i, F<double>::entire());
+        BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,INF_D) );
         BOOST_CHECK(is);
     }
 
     {
         REP<double> i;
-        std::istringstream is("[ ENTIRE ]_dac");
+        std::istringstream is("[ ENTIRE ]foo");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL(i, F<double>::entire());
+        BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,INF_D) );
         BOOST_CHECK(is);
     }
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[   Entire ]_com");
+        std::istringstream is("[   EntirE ]_dac");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-INF_D,INF_D) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i;
         std::istringstream is("[ -inf , INF  ]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL(i, F<double>::entire());
+        BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,INF_D) );
         BOOST_CHECK(is);
     }
 
     {
         REP<double> i;
-        std::istringstream is("[ -inf, INF ]_def");
+        std::istringstream is("[ -inf, INFinity ]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL(i, F<double>::entire());
+        BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,INF_D) );
         BOOST_CHECK(is);
     }
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[ -inf ,  INF ]_com");
+        std::istringstream is("[ -infInItY ,  INF ]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-INF_D,INF_D) );
+        BOOST_CHECK(is);
     }
 
 
@@ -1865,7 +1865,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[  -1.0  ,  1.0  ]_com");
+        std::istringstream is("[  -1.0  ,  1.0  ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-1.0,1.0));
         BOOST_CHECK(is);
@@ -1873,7 +1873,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[  -1.0  , 1.0]_trv");
+        std::istringstream is("[  -1.0  , 0x1.0p0]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-1.0,1.0));
         BOOST_CHECK(is);
@@ -1881,26 +1881,26 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[  -1.0  , 1.0]_ill");
+        std::istringstream is("[  -1.0  , 1.]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-1.0,1.0) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[  -1.0  , 1.0]_fooo");
+        std::istringstream is("[  -1.0  , \t1.0]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-1.0,1.0) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[  -1.0  , 1.0]_da c");
+        std::istringstream is("[\t-1.0  , 1.0]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-1.0,1.0) );
+        BOOST_CHECK(is);
     }
 
 
@@ -1914,7 +1914,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[-1.0, +inf]_def");
+        std::istringstream is("[-1.0, +inf]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-1.0,INF_D));
         BOOST_CHECK(is);
@@ -1922,7 +1922,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[-1.0, +infinity]_def");
+        std::istringstream is("[-1.0, +infinity]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-1.0,INF_D));
         BOOST_CHECK(is);
@@ -1930,10 +1930,10 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[-1.0,]_com");
+        std::istringstream is("[-1.,]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-1.0,INF_D) );
+        BOOST_CHECK(is);
     }
 
     {
@@ -1946,7 +1946,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[-Infinity, 1.000 ]_trv");
+        std::istringstream is("[-Infinity, 1.000 ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,1.0));
         BOOST_CHECK(is);
@@ -1954,15 +1954,15 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i(-35.0,-0.7);
-        std::istringstream is("[-Inf, 1.000 ]_ill");
+        std::istringstream is("[-InfInIty, 1.000 ]");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(-35.0,-0.7) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-INF_D,1.0) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i;
-        std::istringstream is("[ 0.1 ]_com");
+        std::istringstream is("[ 0.1 ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(std::stod("0x1.9999999999999p-4"),std::stod("0x1.999999999999ap-4")));
         BOOST_CHECK(is);
@@ -1978,7 +1978,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[1.0E+400 ]_com");
+        std::istringstream is("[1.0E+400 ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(MAX_D,INF_D));
         BOOST_CHECK(is);
@@ -1986,7 +1986,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[ -4/2, 10/5 ]_com");
+        std::istringstream is("[ -4/2, 10/5 ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-2.0,2.0));
         BOOST_CHECK(is);
@@ -1994,7 +1994,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("[ -1/10, 1/10 ]_com");
+        std::istringstream is("[ -1/10, 1/10 ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-0.1,0.1));
         BOOST_CHECK(is);
@@ -2002,7 +2002,7 @@ BOOST_AUTO_TEST_CASE(minimal_interval_input_test)
 
     {
         REP<double> i(3.5,4.7);
-        std::istringstream is("[ 1/-10, 1/10 ]_com");
+        std::istringstream is("[ 1/-10, 1/10 ]");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL( i, REP<double>(3.5,4.7) );
         BOOST_CHECK(!is);
@@ -2422,13 +2422,13 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
         REP<double> i;
         std::istringstream is("0.0?u_trv");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL(i, REP<double>(0.0,0.05));
+        BOOST_CHECK_EQUAL(i, REP<double>(0,0.05));
         BOOST_CHECK(is);
     }
 
     {
         REP<double> i;
-        std::istringstream is("0.0?d_dac");
+        std::istringstream is("0.0?dfoo");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-0.05,0.0));
         BOOST_CHECK(is);
@@ -2452,7 +2452,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("2.5?d_trv");
+        std::istringstream is("2.5?d");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(std::stod("0x1.3999999999999p+1"),2.5));
         BOOST_CHECK(is);
@@ -2469,7 +2469,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("0.000?5u_def");
+        std::istringstream is("0.000?5u");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(0.0,0.005));
         BOOST_CHECK(is);
@@ -2510,7 +2510,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("0.0??_dac");
+        std::istringstream is("0.0??");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,INF_D));
         BOOST_CHECK(is);
@@ -2518,7 +2518,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("0.0??u_trv");
+        std::istringstream is("0.0??u");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(0.0,INF_D));
         BOOST_CHECK(is);
@@ -2542,7 +2542,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("2.5??u_def");
+        std::istringstream is("2.5??u");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(2.5,INF_D));
         BOOST_CHECK(is);
@@ -2550,7 +2550,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("2.5??d_dac");
+        std::istringstream is("2.5??d");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,2.5));
         BOOST_CHECK(is);
@@ -2567,7 +2567,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("2.500?5ue4_def");
+        std::istringstream is("2.500?5ue4");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(std::stod("0x1.86ap+14"),std::stod("0x1.8768p+14")));
         BOOST_CHECK(is);
@@ -2585,7 +2585,6 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
         REP<double> i;
         std::string rep = "10?18";
         rep += std::string(308, '0');
-        rep += "_com";
         std::stringstream is(rep);
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(-INF_D,INF_D));
@@ -2595,7 +2594,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("10?3_com");
+        std::istringstream is("10?3");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(7.0,13.0));
         BOOST_CHECK(is);
@@ -2603,7 +2602,7 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i;
-        std::istringstream is("10?3e380_com");
+        std::istringstream is("10?3e380");
         F<double>::operator_text_to_interval(is, i);
         BOOST_CHECK_EQUAL(i, REP<double>(MAX_D,INF_D));
         BOOST_CHECK(is);
@@ -2627,25 +2626,25 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_input_test)
 
     {
         REP<double> i(2.0,3.0);
-        std::istringstream is("0.0??_com");
+        std::istringstream is("0.0??_dac");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(2.0,3.0) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-INF_D,INF_D) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i(2.5,3.4);
-        std::istringstream is("0.0??u_ill");
+        std::istringstream is("0.0??ufoo");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(2.5,3.4) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(0,INF_D) );
+        BOOST_CHECK(is);
     }
 
     {
         REP<double> i(-2.0,-1.0);
-        std::istringstream is("0.0??d_com");
+        std::istringstream is("\t0.0??d_trv");
         F<double>::operator_text_to_interval(is, i);
-        BOOST_CHECK_EQUAL( i, REP<double>(-2.0,-1.0) );
-        BOOST_CHECK(!is);
+        BOOST_CHECK_EQUAL( i, REP<double>(-INF_D,0.0) );
+        BOOST_CHECK(is);
     }
 }

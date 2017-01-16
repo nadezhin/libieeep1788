@@ -493,7 +493,7 @@ mpfr_bin_ieee754_flavor<T>::operator_text_to_interval(std::basic_istream<CharT, 
 {
     representation_dec x_dec;
 
-    operator_text_to_interval(is, x_dec);
+    operator_text_to_interval(is, x_dec, false);
 
     if (is)
         x = interval_part(x_dec);
@@ -507,7 +507,16 @@ std::basic_istream<CharT, Traits>&
 mpfr_bin_ieee754_flavor<T>::operator_text_to_interval(std::basic_istream<CharT, Traits>& is,
         mpfr_bin_ieee754_flavor<T>::representation_dec& x)
 {
+    operator_text_to_interval(is, x, true);
+    return is;
+}
 
+template<typename T>
+template< typename CharT, typename Traits >
+std::basic_istream<CharT, Traits>&
+mpfr_bin_ieee754_flavor<T>::operator_text_to_interval(std::basic_istream<CharT, Traits>& is,
+       mpfr_bin_ieee754_flavor<T>::representation_dec& x, bool decorated)
+{
     // RAII for mpz_t
     struct mpz_var
     {
@@ -1064,7 +1073,7 @@ mpfr_bin_ieee754_flavor<T>::operator_text_to_interval(std::basic_istream<CharT, 
                             bool read_decoration = false;
                             try
                             {
-                                read_decoration = is && is.peek() == '_';
+                                read_decoration = decorated && is && is.peek() == '_';
                             }
                             catch (std::ios_base::failure& e)
                             {
@@ -1080,14 +1089,16 @@ mpfr_bin_ieee754_flavor<T>::operator_text_to_interval(std::basic_istream<CharT, 
                                 if (is.eof())
                                     is.clear(std::ios_base::goodbit);
 
-                                x = dec == p1788::decoration::decoration::ill ? nai() : new_dec(bare);
-
-                                // everything was ok
-                                return is;
+                                // everything was ok unless it was bare "[nai]"
+                                if (decorated || dec != p1788::decoration::decoration::ill)
+				{
+                                    x = dec == p1788::decoration::decoration::ill ? nai() : new_dec(bare);
+                                    return is;
+				}
                             }
 
                             // read decoration
-                            if (is && dec != p1788::decoration::decoration::ill)
+                            if (read_decoration && is && dec != p1788::decoration::decoration::ill)
                             {
                                 is.get();   // remove underscore
 
@@ -1351,7 +1362,7 @@ mpfr_bin_ieee754_flavor<T>::operator_text_to_interval(std::basic_istream<CharT, 
                                 bool read_decoration = false;
                                 try
                                 {
-                                    read_decoration = is && is.peek() == '_';
+                                    read_decoration = decorated && is && is.peek() == '_';
                                 }
                                 catch (std::ios_base::failure& e)
                                 {
@@ -1374,7 +1385,7 @@ mpfr_bin_ieee754_flavor<T>::operator_text_to_interval(std::basic_istream<CharT, 
                                 }
 
                                 // read decoration
-                                if (is && dec != p1788::decoration::decoration::ill)
+                                if (read_decoration && is && dec != p1788::decoration::decoration::ill)
                                 {
                                     is.get();   // remove underscore
 

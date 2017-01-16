@@ -164,8 +164,8 @@ BOOST_AUTO_TEST_CASE(integration_text_constructor_test)
 {
     p1788::exception::clear();
 
-    BOOST_CHECK_EQUAL( inf( I<double>("[0.1, 2.1]_def") ), std::stod("0X1.9999999999999P-4") );
-    BOOST_CHECK_EQUAL( sup( I<double>("[0.1, 2.1]_def") ), 2.1 );
+    BOOST_CHECK_EQUAL( inf( I<double>("[0.1, 2.1]") ), std::stod("0X1.9999999999999P-4") );
+    BOOST_CHECK_EQUAL( sup( I<double>("[0.1, 2.1]") ), 2.1 );
 
     BOOST_CHECK_EQUAL( inf( I<double>("[0.1]") ), std::stod("0X1.9999999999999P-4") );
     BOOST_CHECK_EQUAL( sup( I<double>("[0.1]") ), std::stod("0X1.999999999999AP-4") );
@@ -175,6 +175,10 @@ BOOST_AUTO_TEST_CASE(integration_text_constructor_test)
 
     BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::none_bit);
 
+    BOOST_CHECK( is_empty( I<double>("[0.1, 2.1]_def") )  );
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
+
+    p1788::exception::clear();
     BOOST_CHECK( is_empty( I<float>("[3.0,-1.0]") )  );
 
     BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);

@@ -490,75 +490,77 @@ BOOST_AUTO_TEST_CASE(minimal_text_to_interval_test)
     p1788::exception::clear();
 
     BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[ Empty  ]") ) );
-    BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[ Empty  ]_trv") ) );
+    BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[ EMPTY  ]") ) );
     BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[  ]") ) );
-    BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[  ]_trv") ) );
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("[,]"), REP<double>(-INF_D,INF_D) );
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[,]_trv"), REP<double>(-INF_D,INF_D));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ entire  ]"), REP<double>(-INF_D,INF_D));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ ENTIRE ]_dac"), REP<double>(-INF_D,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ ENTIRE ]"), REP<double>(-INF_D,INF_D));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ -inf , INF  ]"), REP<double>(-INF_D,INF_D));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ -inf, INF ]_def"), REP<double>(-INF_D,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ -infinity, INF ]"), REP<double>(-INF_D,INF_D));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-1.0,1.0]"), REP<double>(-1.0,1.0));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[  -1.0  ,  1.0  ]_com"), REP<double>(-1.0,1.0));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[  -1.0  , 1.0]_trv"), REP<double>(-1.0,1.0));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[  -1.0  ,  1  ]"), REP<double>(-1.0,1.0));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[  -1.0  , 0x1.0p0 ]"), REP<double>(-1.0,1.0));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-1,]"), REP<double>(-1.0,INF_D));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-1.0, +inf]_def"), REP<double>(-1.0,INF_D));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-1.0, +infinity]_def"), REP<double>(-1.0,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-1.0, +inf]"), REP<double>(-1.0,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-1.0, +infinity]"), REP<double>(-1.0,INF_D));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-Inf, 1.000 ]"), REP<double>(-INF_D,1.0));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-Infinity, 1.000 ]_trv"), REP<double>(-INF_D,1.0));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[-Infinity, 1.000 ]"), REP<double>(-INF_D,1.0));
 
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[1.0E+400 ]_com"), REP<double>(MAX_D,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[1.0E+400 ]"), REP<double>(MAX_D,INF_D));
 
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ -4/2, 10/5 ]_com"), REP<double>(-2.0,2.0));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ -1/10, 1/10 ]_com"), REP<double>(-0.1,0.1));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ -4/2, 10/5 ]"), REP<double>(-2.0,2.0));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("[ -1/10, 1/10 ]"), REP<double>(-0.1,0.1));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0?"), REP<double>(-0.05,0.05));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0?u_trv"), REP<double>(0.0,0.05));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0?d_dac"), REP<double>(-0.05,0.0));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0?u"), REP<double>(0.0,0.05));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0?d"), REP<double>(-0.05,0.0));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5?"), REP<double>(std::stod("0x1.3999999999999p+1"),std::stod("0x1.4666666666667p+1")));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5?u"), REP<double>(2.5,std::stod("0x1.4666666666667p+1")));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5?d_trv"), REP<double>(std::stod("0x1.3999999999999p+1"),2.5));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5?d"), REP<double>(std::stod("0x1.3999999999999p+1"),2.5));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.000?5"), REP<double>(-0.005,0.005));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.000?5u_def"), REP<double>(0.0,0.005));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.000?5u"), REP<double>(0.0,0.005));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.000?5d"), REP<double>(-0.005,0.0));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.500?5"), REP<double>(std::stod("0x1.3f5c28f5c28f5p+1"),std::stod("0x1.40a3d70a3d70bp+1")));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.500?5u"), REP<double>(2.5,std::stod("0x1.40a3d70a3d70bp+1")));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.500?5d"), REP<double>(std::stod("0x1.3f5c28f5c28f5p+1"),2.5));
 
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0??_dac"), REP<double>(-INF_D,INF_D));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0??u_trv"), REP<double>(0.0,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0??"), REP<double>(-INF_D,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0??u"), REP<double>(0.0,INF_D));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("0.0??d"), REP<double>(-INF_D,0.0));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5??"), REP<double>(-INF_D,INF_D));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5??u_def"), REP<double>(2.5,INF_D));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5??d_dac"), REP<double>(-INF_D,2.5));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5??u"), REP<double>(2.5,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.5??d"), REP<double>(-INF_D,2.5));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.500?5e+27"), REP<double>(std::stod("0x1.01fa19a08fe7fp+91"),std::stod("0x1.0302cc4352683p+91")));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.500?5ue4_def"), REP<double>(std::stod("0x1.86ap+14"),std::stod("0x1.8768p+14")));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.500?5ue4"), REP<double>(std::stod("0x1.86ap+14"),std::stod("0x1.8768p+14")));
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("2.500?5de-5"), REP<double>(std::stod("0x1.a2976f1cee4d5p-16"),std::stod("0x1.a36e2eb1c432dp-16")));
 
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("10?3_com"), REP<double>(7.0,13.0));
-    BOOST_CHECK_EQUAL( F<double>::text_to_interval("10?3e380_com"), REP<double>(MAX_D,INF_D));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("10?3"), REP<double>(7.0,13.0));
+    BOOST_CHECK_EQUAL( F<double>::text_to_interval("10?3e380"), REP<double>(MAX_D,INF_D));
 
     BOOST_CHECK_EQUAL( F<double>::text_to_interval("1.0000000000000001?1"), REP<double>(1.0,std::stod("0x1.0000000000001p+0")));
 
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::none_bit);
     std::string rep = "10?18";
     rep += std::string(308, '0');
-    rep += "_com";
     BOOST_CHECK_EQUAL( F<double>::text_to_interval(rep), REP<double>(-INF_D,INF_D));
 
     BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::none_bit);
 
+    BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[1,2]_com") ) );
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
+    p1788::exception::clear();
+
     BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[ Nai  ]") ) );
-    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::interval_part_of_nai_bit);
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
     p1788::exception::clear();
 
     BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[ Nai  ]_ill") ) );

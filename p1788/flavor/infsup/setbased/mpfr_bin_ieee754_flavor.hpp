@@ -573,6 +573,12 @@ public:
         std::basic_istream<CharT, Traits>& is,
         representation_dec& x);
 
+    template< typename CharT, typename Traits >
+    static std::basic_istream<CharT, Traits>& operator_text_to_interval(
+        std::basic_istream<CharT, Traits>& is,
+        representation_dec& x,
+	bool decorated);
+
 ///@}
 
 // -----------------------------------------------------------------------------
