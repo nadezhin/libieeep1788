@@ -332,12 +332,12 @@ bool contains_interior(base_interval<T1, Flavor, RepType1, ConcreteInterval1> co
 }
 
 
-// strictly_less
+// strict_less
 
 // static
 template<typename T, template<typename> class Flavor, typename RepType, class ConcreteInterval>
 template<typename T_, typename RepType_, class ConcreteInterval_>
-bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_less(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
+bool base_interval<T, Flavor, RepType, ConcreteInterval>::strict_less(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
         base_interval<T_, Flavor, RepType_, ConcreteInterval_> const& y)
 {
     // assert that only bare intervals or decorated intervals are used
@@ -354,18 +354,18 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_less(base_int
 
 // function
 template<typename T1, template<typename> class Flavor, typename RepType1, class ConcreteInterval1, typename T2, typename RepType2, class ConcreteInterval2>
-bool strictly_less(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
+bool strict_less(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
 {
-    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strictly_less(x, y);
+    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strict_less(x, y);
 }
 
 
-// strictly_greater
+// strict_greater
 
 // static
 template<typename T, template<typename> class Flavor, typename RepType, class ConcreteInterval>
 template<typename T_, typename RepType_, class ConcreteInterval_>
-bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_greater(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
+bool base_interval<T, Flavor, RepType, ConcreteInterval>::strict_greater(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
         base_interval<T_, Flavor, RepType_, ConcreteInterval_> const& y)
 {
     // assert that only bare intervals or decorated intervals are used
@@ -382,18 +382,18 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_greater(base_
 
 // function
 template<typename T1, template<typename> class Flavor, typename RepType1, class ConcreteInterval1, typename T2, typename RepType2, class ConcreteInterval2>
-bool strictly_greater(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
+bool strict_greater(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
 {
-    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strictly_greater(x, y);
+    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strict_greater(x, y);
 }
 
 
-// strictly_precedes
+// strict_precedes
 
 // static
 template<typename T, template<typename> class Flavor, typename RepType, class ConcreteInterval>
 template<typename T_, typename RepType_, class ConcreteInterval_>
-bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_precedes(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
+bool base_interval<T, Flavor, RepType, ConcreteInterval>::strict_precedes(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
         base_interval<T_, Flavor, RepType_, ConcreteInterval_> const& y)
 {
     // assert that only bare intervals or decorated intervals are used
@@ -410,18 +410,18 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_precedes(base
 
 // function
 template<typename T1, template<typename> class Flavor, typename RepType1, class ConcreteInterval1, typename T2, typename RepType2, class ConcreteInterval2>
-bool strictly_precedes(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
+bool strict_precedes(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
 {
-    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strictly_precedes(x, y);
+    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strict_precedes(x, y);
 }
 
 
-// strictly_succeeds
+// strict_succeeds
 
 // static
 template<typename T, template<typename> class Flavor, typename RepType, class ConcreteInterval>
 template<typename T_, typename RepType_, class ConcreteInterval_>
-bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_succeeds(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
+bool base_interval<T, Flavor, RepType, ConcreteInterval>::strict_succeeds(base_interval<T, Flavor, RepType, ConcreteInterval> const& x,
         base_interval<T_, Flavor, RepType_, ConcreteInterval_> const& y)
 {
     // assert that only bare intervals or decorated intervals are used
@@ -438,9 +438,9 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_succeeds(base
 
 // function
 template<typename T1, template<typename> class Flavor, typename RepType1, class ConcreteInterval1, typename T2, typename RepType2, class ConcreteInterval2>
-bool strictly_succeeds(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
+bool strict_succeeds(base_interval<T1, Flavor, RepType1, ConcreteInterval1> const& x, base_interval<T2, Flavor, RepType2, ConcreteInterval2> const& y)
 {
-    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strictly_succeeds(x, y);
+    return base_interval<T1, Flavor, RepType1, ConcreteInterval1>::strict_succeeds(x, y);
 }
 
 
