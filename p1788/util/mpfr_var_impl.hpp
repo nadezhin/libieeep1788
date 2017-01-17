@@ -279,6 +279,41 @@ std::string mpfr_var<PREC_,EMIN_,EMAX_,SUBNORMALIZE_>::get_str(mpfr_rnd_t rnd,
         }
         break;
     case p1788::io::hex_representation:
+	if (precision == 0 && mpfr_number_p(var_))
+	{
+            std::stringstream out;
+            if (mpfr_signbit(var_)) out << '-';
+            out << '0' << (text_rep == p1788::io::upper_case_text_representation ? 'X' : 'x');
+            mpz_t n;
+            mpz_init(n);
+            mpfr_exp_t exp0 = mpfr_get_z_2exp(n, var_);
+            mpz_abs(n, n);
+            mp_bitcnt_t nt = mpz_scan1(n, 0);
+            mpz_tdiv_q_2exp(n, n, nt);
+            exp0 += nt;
+            mpfr_exp_t exp = std::max(mpfr_get_exp(var_), EMIN_ + PREC_ - 1);
+            int frac_bits = exp - exp0 - 1;
+            if (frac_bits % 4 != 0)
+            {
+                mpz_mul_2exp(n, n, 4 - frac_bits % 4);
+                frac_bits += 4 - frac_bits % 4;
+            }
+            int hex_digits = frac_bits / 4 + 1;
+            char *buf = new char[hex_digits + 1];
+            mpz_get_str(buf, text_rep == p1788::io::upper_case_text_representation ? -16 : 16, n);
+            mpz_clear(n);
+            int pad = hex_digits - strlen(buf);
+            for (int i = 0; i < hex_digits; i++)
+            {
+                out << (i < pad ? '0' : buf[i - pad]);
+                if (i == 0 && hex_digits > 1) out << '.';
+            }
+            delete[] buf;
+            out << (text_rep == p1788::io::upper_case_text_representation ? 'P' : 'p') << (exp - 1);
+            std::string str = out.str();
+            while (str.size() < width) str = " " + str;
+            return str;
+        }
         format += precision > 0 ? "." + std::to_string(precision) : "";     // no precision prints sufficient digits for an exact rep
         format += "R*";
         format += text_rep == p1788::io::upper_case_text_representation ? "A" : "a";
@@ -454,7 +489,7 @@ void mpfr_quadrant (mpz_ptr k, mpfr_srcptr op)
     mpfr_exp_t saved_emax = mpfr_get_emax();
     mpfr_set_emin(mpfr_get_emin_min());
     mpfr_set_emax(mpfr_get_emax_max());
-    for (;;) 
+    for (;;)
     {
         mpfr_t k_inf, k_sup;
 
@@ -517,7 +552,7 @@ static int mpfr_atrig(mpfr_ptr rop, mpfr_srcptr op, int (*fun)(mpfr_ptr rop, mpf
 
         mpfr_const_pi(pi, MPFR_RNDD);
         mpfr_mul_z(pi, pi, npi, MPFR_RNDD);
-        if (sub) 
+        if (sub)
         {
             (*fun)(sup, op, MPFR_RNDU);
             mpfr_sub(sup, pi, sup, MPFR_RNDD);
@@ -530,7 +565,7 @@ static int mpfr_atrig(mpfr_ptr rop, mpfr_srcptr op, int (*fun)(mpfr_ptr rop, mpf
 
         mpfr_const_pi(pi, MPFR_RNDU);
         mpfr_mul_z(pi, pi, npi, MPFR_RNDU);
-        if (sub) 
+        if (sub)
         {
             (*fun)(inf, op, MPFR_RNDD);
             mpfr_sub(inf, pi, inf, MPFR_RNDU);

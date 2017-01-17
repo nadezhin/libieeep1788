@@ -711,7 +711,7 @@ BOOST_AUTO_TEST_CASE(minimal_bare_interval_output_test)
     output << p1788::io::hex;
     output << p1788::io::string_width(0);
     F<double>::operator_interval_to_text(output, REP<double>(-0.1,1.3) );
-    BOOST_CHECK( output.is_equal( "-0X1.999999999999AP-4 0X1.4CCCCCCCCCCCDP+0" ) );
+    BOOST_CHECK( output.is_equal( "-0X1.999999999999AP-4 0X1.4CCCCCCCCCCCDP0" ) );
 
     output << p1788::io::punctuation;
     output << p1788::io::lower_case;
@@ -802,7 +802,7 @@ BOOST_AUTO_TEST_CASE(minimal_decorated_interval_output_test)
     output << p1788::io::hex;
     output << p1788::io::string_width(0);
     F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-0.1,1.3), DEC::trv) );
-    BOOST_CHECK( output.is_equal( "-0X1.999999999999AP-4 0X1.4CCCCCCCCCCCDP+0 4" ) );
+    BOOST_CHECK( output.is_equal( "-0X1.999999999999AP-4 0X1.4CCCCCCCCCCCDP0 4" ) );
 
     output << p1788::io::punctuation;
     output << p1788::io::lower_case;
@@ -1167,7 +1167,85 @@ BOOST_AUTO_TEST_CASE(minimal_uncertain_interval_dec_output_test)
     BOOST_CHECK( output.is_equal( "NAI" ) );
 }
 
+BOOST_AUTO_TEST_CASE(interval_to_exact_test)
+{
+    boost::test_tools::output_test_stream output;
+    output << p1788::io::hex;
 
+    F<double>::operator_interval_to_text(output, F<double>::empty() );
+    BOOST_CHECK ( output.is_equal( "[empty]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(-INF_D,INF_D) );
+    BOOST_CHECK ( output.is_equal( "[entire]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(-3,INF_D) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p1,inf]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(-INF_D,5) );
+    BOOST_CHECK ( output.is_equal( "[-inf,0x1.4p2]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p13"),std::stod("0x5p13")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p14,0x1.4p15]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p12"),std::stod("0x5p12")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p13,0x1.4p14]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p11"),std::stod("0x5p11")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p12,0x1.4p13]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p10"),std::stod("0x5p10")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p11,0x1.4p12]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p0"),std::stod("0x5p0")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p1,0x1.4p2]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p-1"),std::stod("0x5p-1")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p0,0x1.4p1]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p-2"),std::stod("0x5p-2")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p-1,0x1.4p0]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p-3"),std::stod("0x5p-3")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p-2,0x1.4p-1]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p-4"),std::stod("0x5p-4")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p-3,0x1.4p-2]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x3p-1030"),std::stod("0x5p-1030")) );
+    BOOST_CHECK ( output.is_equal( "[-0x0.03p-1022,0x0.05p-1022]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p13"),std::stod("0x1p13")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p13,0x1p13]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p12"),std::stod("0x1p12")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p12,0x1p12]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p11"),std::stod("0x1p11")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p11,0x1p11]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p10"),std::stod("0x1p10")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p10,0x1p10]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p0"),std::stod("0x1p0")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p0,0x1p0]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p-1"),std::stod("0x1p-1")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p-1,0x1p-1]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p-2"),std::stod("0x1p-2")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p-2,0x1p-2]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p-3"),std::stod("0x1p-3")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p-3,0x1p-3]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p-4"),std::stod("0x1p-4")) );
+    BOOST_CHECK ( output.is_equal( "[-0x1p-4,0x1p-4]" ) );
+    F<double>::operator_interval_to_text(output, REP<double>(std::stod("-0x1p-1030"),std::stod("0x1p-1030")) );
+    BOOST_CHECK ( output.is_equal( "[-0x0.01p-1022,0x0.01p-1022]" ) );
+}
+
+BOOST_AUTO_TEST_CASE(interval_to_dec_exact_test)
+{
+    boost::test_tools::output_test_stream output;
+    output << p1788::io::hex;
+
+    F<double>::operator_interval_to_text(output, F<double>::nai() );
+    BOOST_CHECK ( output.is_equal( "[nai]" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(F<double>::empty(), DEC::trv) );
+    BOOST_CHECK ( output.is_equal( "[empty]" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-INF_D,INF_D), DEC::dac) );
+    BOOST_CHECK ( output.is_equal( "[entire]_dac" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-INF_D,INF_D), DEC::def) );
+    BOOST_CHECK ( output.is_equal( "[entire]_def" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-INF_D,INF_D), DEC::trv) );
+    BOOST_CHECK ( output.is_equal( "[entire]_trv" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-3,5), DEC::com) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p1,0x1.4p2]_com" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-3,5), DEC::dac) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p1,0x1.4p2]_dac" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-3,5), DEC::def) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p1,0x1.4p2]_def" ) );
+    F<double>::operator_interval_to_text(output, REP_DEC<double>(REP<double>(-3,5), DEC::trv) );
+    BOOST_CHECK ( output.is_equal( "[-0x1.8p1,0x1.4p2]_trv" ) );
+}
 
 BOOST_AUTO_TEST_CASE(minimal_decorated_interval_input_test)
 {

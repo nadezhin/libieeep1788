@@ -263,7 +263,7 @@ BOOST_AUTO_TEST_CASE(minimal_get_str_test)
     mpfr_var<float>::setup();
 
     mpfr_var<float> var_float1(12.3, MPFR_RNDD);
-    BOOST_CHECK_EQUAL( var_float1.get_str(MPFR_RNDD, p1788::io::hex_representation, 0, 0, p1788::io::upper_case_text_representation), "0XC.4CCCCP+0" );
+    BOOST_CHECK_EQUAL( var_float1.get_str(MPFR_RNDD, p1788::io::hex_representation, 0, 0, p1788::io::upper_case_text_representation), "0X1.899998P3" );
     BOOST_CHECK_EQUAL( var_float1.get_str(MPFR_RNDU, p1788::io::hex_representation, 0, 3, p1788::io::lower_case_text_representation), "0xc.4cdp+0" );
     BOOST_CHECK_EQUAL( var_float1.get_str(MPFR_RNDU, p1788::io::hex_representation, 20, 7, p1788::io::lower_case_text_representation), "      0xc.4cccc00p+0" );
     BOOST_CHECK_EQUAL( var_float1.get_str(MPFR_RNDD, p1788::io::hex_representation, 3, 7, p1788::io::upper_case_text_representation), "0XC.4CCCC00P+0" );
@@ -328,7 +328,7 @@ BOOST_AUTO_TEST_CASE(minimal_get_str_test)
     mpfr_var<double>::setup();
 
     mpfr_var<double> var_double1(12.3, MPFR_RNDD);
-    BOOST_CHECK_EQUAL( var_double1.get_str(MPFR_RNDD, p1788::io::hex_representation, 0, 0, p1788::io::upper_case_text_representation), "0XC.4CCCCCCCCCCDP+0" );
+    BOOST_CHECK_EQUAL( var_double1.get_str(MPFR_RNDD, p1788::io::hex_representation, 0, 0, p1788::io::upper_case_text_representation), "0X1.899999999999AP3" );
     BOOST_CHECK_EQUAL( var_double1.get_str(MPFR_RNDU, p1788::io::hex_representation, 0, 3, p1788::io::lower_case_text_representation), "0xc.4cdp+0" );
     BOOST_CHECK_EQUAL( var_double1.get_str(MPFR_RNDU, p1788::io::hex_representation, 20, 7, p1788::io::lower_case_text_representation), "      0xc.4cccccdp+0" );
     BOOST_CHECK_EQUAL( var_double1.get_str(MPFR_RNDD, p1788::io::hex_representation, 3, 7, p1788::io::upper_case_text_representation), "0XC.4CCCCCCP+0" );
