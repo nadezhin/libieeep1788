@@ -1444,11 +1444,11 @@ public:
     /// \param y Interval representation
     ///
     /// \return \li <c>false</c> if \p x is an invalid representation (and if no \link p1788::exception::invalid_operand_exception p1788::exception::invalid_operand_exception \endlink is thrown)
-    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strictly_less(representation const& x, representation_type<T_> const& y) strictly_less\endlink</c> otherwise.
+    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strict_less(representation const& x, representation_type<T_> const& y) strict_less\endlink</c> otherwise.
     /// \exception p1788::exception::invalid_operand_exception  Throws exception if the <c>invalid_operand_bit</c> is set for the <c>p1788::exception::throw_exception_cwd</c> using
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
-    static bool strictly_less(representation const& x, representation const& y);
+    static bool strict_less(representation const& x, representation const& y);
 
     /// \brief Decorated version. Checks if \p x is strictly less than \p y.
     ///
@@ -1457,12 +1457,12 @@ public:
     ///
     /// \return \li <c>false</c> if \p x or \p y is an invalid representation (and if no \link p1788::exception::invalid_operand_exception p1788::exception::invalid_operand_exception \endlink is thrown)
     ///         \li <c>false</c> if \p x  or \p y is NaI
-    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strictly_less(representation const& x, representation_type<T_> const& y) strictly_less\endlink</c>
+    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strict_less(representation const& x, representation_type<T_> const& y) strict_less\endlink</c>
     ///             called with the bare interval part otherwise
     /// \exception p1788::exception::invalid_operand_exception  Throws exception if the <c>invalid_operand_bit</c> is set for the <c>p1788::exception::throw_exception_cwd</c> using
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
-    static bool strictly_less(representation_dec const& x, representation_dec const& y);
+    static bool strict_less(representation_dec const& x, representation_dec const& y);
 
     /// \brief Mixed-type version. Checks if \p x is strictly less than \p y.
     ///
@@ -1479,7 +1479,7 @@ public:
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
     template<typename T_>
-    static bool strictly_less(representation const& x, representation_type<T_> const& y);
+    static bool strict_less(representation const& x, representation_type<T_> const& y);
 
     /// \brief Decorated mixed-type version. Checks if \p x is strictly less than \p y.
     ///
@@ -1490,13 +1490,13 @@ public:
     ///
     /// \return \li <c>false</c> if \p x or \p y is an invalid representation (and if no \link p1788::exception::invalid_operand_exception p1788::exception::invalid_operand_exception \endlink is thrown)
     ///         \li <c>false</c> if \p x  or \p y is NaI
-    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strictly_less(representation const& x, representation_type<T_> const& y) strictly_less\endlink</c>
+    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strict_less(representation const& x, representation_type<T_> const& y) strict_less\endlink</c>
     ///             called with the bare interval part otherwise
     /// \exception p1788::exception::invalid_operand_exception  Throws exception if the <c>invalid_operand_bit</c> is set for the <c>p1788::exception::throw_exception_cwd</c> using
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
     template<typename T_>
-    static bool strictly_less(representation_dec const& x, representation_dec_type<T_> const& y);
+    static bool strict_less(representation_dec const& x, representation_dec_type<T_> const& y);
 
 
     /// \brief Checks if \p x is strictly left of  \p y.
@@ -1505,11 +1505,11 @@ public:
     /// \param y Interval representation
     ///
     /// \return \li <c>false</c> if \p x is an invalid representation (and if no \link p1788::exception::invalid_operand_exception p1788::exception::invalid_operand_exception \endlink is thrown)
-    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strictly_precedes(representation const& x, representation_type<T_> const& y) strictly_precedes\endlink</c> otherwise.
+    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strict_precedes(representation const& x, representation_type<T_> const& y) strict_precedes\endlink</c> otherwise.
     /// \exception p1788::exception::invalid_operand_exception  Throws exception if the <c>invalid_operand_bit</c> is set for the <c>p1788::exception::throw_exception_cwd</c> using
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
-    static bool strictly_precedes(representation const& x, representation const& y);
+    static bool strict_precedes(representation const& x, representation const& y);
 
     /// \brief Decorated version. Checks if \p x is strictly left of  \p y.
     ///
@@ -1518,12 +1518,12 @@ public:
     ///
     /// \return \li <c>false</c> if \p x or \p y is an invalid representation (and if no \link p1788::exception::invalid_operand_exception p1788::exception::invalid_operand_exception \endlink is thrown)
     ///         \li <c>false</c> if \p x  or \p y is NaI
-    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strictly_precedes(representation const& x, representation_type<T_> const& y) strictly_precedes\endlink</c>
+    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strict_precedes(representation const& x, representation_type<T_> const& y) strict_precedes\endlink</c>
     ///             called with the bare interval part otherwise
     /// \exception p1788::exception::invalid_operand_exception  Throws exception if the <c>invalid_operand_bit</c> is set for the <c>p1788::exception::throw_exception_cwd</c> using
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
-    static bool strictly_precedes(representation_dec const& x, representation_dec const& y);
+    static bool strict_precedes(representation_dec const& x, representation_dec const& y);
 
     /// \brief Mixed-type version. Checks if \p x is strictly left of  \p y.
     ///
@@ -1540,7 +1540,7 @@ public:
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
     template<typename T_>
-    static bool strictly_precedes(representation const& x, representation_type<T_> const& y);
+    static bool strict_precedes(representation const& x, representation_type<T_> const& y);
 
     /// \brief Decorated mixed-type version. Checks if \p x is strictly left of  \p y.
     ///
@@ -1551,13 +1551,13 @@ public:
     ///
     /// \return \li <c>false</c> if \p x or \p y is an invalid representation (and if no \link p1788::exception::invalid_operand_exception p1788::exception::invalid_operand_exception \endlink is thrown)
     ///         \li <c>false</c> if \p x  or \p y is NaI
-    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strictly_precedes(representation const& x, representation_type<T_> const& y) strictly_precedes\endlink</c>
+    ///         \li Result of bare mixed-type <c>\link mpfr_bin_ieee754_flavor::strict_precedes(representation const& x, representation_type<T_> const& y) strict_precedes\endlink</c>
     ///             called with the bare interval part otherwise
     /// \exception p1788::exception::invalid_operand_exception  Throws exception if the <c>invalid_operand_bit</c> is set for the <c>p1788::exception::throw_exception_cwd</c> using
     /// \link p1788::exception::set_p1788::exception::throw_exception_cwd(exception_bits)\endlink.
     /// \note In case of an invalid representation of \p x or \p y the exception state for an invalid operation is set, see \link p1788::exception::invalid_operand() \endlink.
     template<typename T_>
-    static bool strictly_precedes(representation_dec const& x, representation_dec_type<T_> const& y);
+    static bool strict_precedes(representation_dec const& x, representation_dec_type<T_> const& y);
 
     /// \brief Checks if \p x and \p y are disjoint.
     ///

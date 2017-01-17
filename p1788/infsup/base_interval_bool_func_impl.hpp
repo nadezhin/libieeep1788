@@ -349,7 +349,7 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_less(base_int
                    "interval and decorated_interval types together!"
                  );
 
-    return Flavor<T>::strictly_less(x.rep_, y.rep_);
+    return Flavor<T>::strict_less(x.rep_, y.rep_);
 }
 
 // function
@@ -377,7 +377,7 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_greater(base_
                    "interval and decorated_interval types together!"
                  );
 
-    return Flavor<T_>::strictly_less(y.rep_, x.rep_);
+    return Flavor<T_>::strict_less(y.rep_, x.rep_);
 }
 
 // function
@@ -405,7 +405,7 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_precedes(base
                    "interval and decorated_interval types together!"
                  );
 
-    return Flavor<T>::strictly_precedes(x.rep_, y.rep_);
+    return Flavor<T>::strict_precedes(x.rep_, y.rep_);
 }
 
 // function
@@ -433,7 +433,7 @@ bool base_interval<T, Flavor, RepType, ConcreteInterval>::strictly_succeeds(base
                    "interval and decorated_interval types together!"
                  );
 
-    return Flavor<T_>::strictly_precedes(y.rep_, x.rep_);
+    return Flavor<T_>::strict_precedes(y.rep_, x.rep_);
 }
 
 // function
