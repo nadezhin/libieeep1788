@@ -49,6 +49,12 @@ std::basic_istream<CharT, Traits>& operator>>(
     return Flavor<T>::operator_text_to_interval(is, x.rep_);
 }
 
+template<typename T, template<typename> class Flavor, typename RepType, class ConcreteInterval>
+std::string interval_to_exact(base_interval<T, Flavor, RepType, ConcreteInterval> const& x)
+{
+    return Flavor<T>::interval_to_exact(x.rep_);
+}
+
 
 
 } // namespace infsup

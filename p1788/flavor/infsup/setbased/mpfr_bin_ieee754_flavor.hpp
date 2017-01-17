@@ -560,6 +560,16 @@ public:
     /// \todo TODO
     ///
     ///
+    static std::string interval_to_exact(representation const& x);
+
+    /// \todo TODO
+    ///
+    ///
+    static std::string interval_to_exact(representation_dec const& x);
+
+    /// \todo TODO
+    ///
+    ///
     template< typename CharT, typename Traits >
     static std::basic_istream<CharT, Traits>& operator_text_to_interval(
         std::basic_istream<CharT, Traits>& is,

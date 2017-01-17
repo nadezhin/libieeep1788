@@ -80,6 +80,17 @@ BOOST_AUTO_TEST_CASE(integration_output_test)
 }
 
 
+BOOST_AUTO_TEST_CASE(integration_interval_to_exact_test)
+{
+    BOOST_CHECK_EQUAL(interval_to_exact(I<double>::empty()), "[empty]" );
+    BOOST_CHECK_EQUAL(interval_to_exact(I<float>(1.0,2.1)), "[0x1p0,0x1.0ccccep1]");
+    BOOST_CHECK_EQUAL(interval_to_exact(DI<double>::nai()), "[nai]" );
+    BOOST_CHECK_EQUAL(interval_to_exact(DI<double>::empty()), "[empty]" );
+    BOOST_CHECK_EQUAL(interval_to_exact(DI<double>::entire()), "[entire]_dac" );
+    BOOST_CHECK_EQUAL(interval_to_exact(DI<float>(1.0,2.1)), "[0x1p0,0x1.0ccccep1]_com");
+}
+
+
 BOOST_AUTO_TEST_CASE(integration_input_test)
 {
     {

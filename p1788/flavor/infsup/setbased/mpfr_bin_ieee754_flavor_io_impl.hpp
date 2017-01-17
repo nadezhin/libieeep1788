@@ -484,6 +484,23 @@ mpfr_bin_ieee754_flavor<T>::operator_interval_to_text(std::basic_ostream<CharT, 
     return os << buf.str();
 }
 
+template<typename T>
+std::string mpfr_bin_ieee754_flavor<T>::interval_to_exact(mpfr_bin_ieee754_flavor<T>::representation const& x)
+{
+    std::stringstream os;
+    os << p1788::io::hex;
+    operator_interval_to_text(os, x);
+    return os.str();
+}
+
+template<typename T>
+std::string mpfr_bin_ieee754_flavor<T>::interval_to_exact(mpfr_bin_ieee754_flavor<T>::representation_dec const& x)
+{
+    std::stringstream os;
+    os << p1788::io::hex;
+    operator_interval_to_text(os, x);
+    return os.str();
+}
 
 template<typename T>
 template< typename CharT, typename Traits >

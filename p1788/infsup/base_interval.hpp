@@ -130,6 +130,8 @@ public:
     template<typename T_, template<typename> class Flavor_, typename RepType_, class ConcreteInterval_, typename CharT, typename Traits>
     friend std::basic_istream<CharT, Traits>& operator>>(std::basic_istream<CharT, Traits>&, base_interval<T_, Flavor_, RepType_, ConcreteInterval_>&);
 
+    template<typename T_, template<typename> class Flavor_, typename RepType_, class ConcreteInterval_>
+    friend std::string interval_to_exact(base_interval<T_, Flavor_, RepType_, ConcreteInterval_> const& x);
 
 
 
