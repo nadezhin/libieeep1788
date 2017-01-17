@@ -262,6 +262,8 @@ mpfr_bin_ieee754_flavor<T>::text_to_interval(std::string const& str)
     representation rep;
     std::istringstream s(str);
 
+    s >> std::noskipws;
+
     operator_text_to_interval(s, rep);
 
     if (!s)
@@ -270,13 +272,11 @@ mpfr_bin_ieee754_flavor<T>::text_to_interval(std::string const& str)
         return empty();
     }
 
-    char c;
-    while(s.get(c))
-        if (!std::isspace(c))
-        {
-            p1788::exception::signal_undefined_operation();
-            return empty();
-        }
+    if (s.get() != EOF)
+    {
+        p1788::exception::signal_undefined_operation();
+        return empty();
+    }
 
     return rep;
 }
@@ -289,6 +289,8 @@ mpfr_bin_ieee754_flavor<T>::text_to_decorated_interval(std::string const& str)
     representation_dec rep;
     std::istringstream s(str);
 
+    s >> std::noskipws;
+
     operator_text_to_interval(s, rep);
 
     if (!s)
@@ -297,13 +299,11 @@ mpfr_bin_ieee754_flavor<T>::text_to_decorated_interval(std::string const& str)
         return nai();
     }
 
-    char c;
-    while(s.get(c))
-        if (!std::isspace(c))
-        {
-            p1788::exception::signal_undefined_operation();
-            return nai();
-        }
+    if(s.get() != EOF)
+    {
+        p1788::exception::signal_undefined_operation();
+        return nai();
+    }
 
     return rep;
 }

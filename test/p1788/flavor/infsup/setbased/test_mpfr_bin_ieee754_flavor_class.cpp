@@ -555,6 +555,14 @@ BOOST_AUTO_TEST_CASE(minimal_text_to_interval_test)
 
     BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::none_bit);
 
+    BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval(" [1,2]") ) );
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
+    p1788::exception::clear();
+
+    BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[1,2] ") ) );
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
+    p1788::exception::clear();
+
     BOOST_CHECK( F<double>::is_empty( F<double>::text_to_interval("[1,2]_com") ) );
     BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
     p1788::exception::clear();
@@ -825,6 +833,14 @@ BOOST_AUTO_TEST_CASE(minimal_text_to_decorated_interval_test)
     p1788::exception::clear();
 
     BOOST_CHECK( F<double>::is_nai( F<double>::text_to_decorated_interval("[1.0,2.0") ) );
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
+    p1788::exception::clear();
+
+    BOOST_CHECK( F<double>::is_nai( F<double>::text_to_decorated_interval(" [1,2]") ) );
+    BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
+    p1788::exception::clear();
+
+    BOOST_CHECK( F<double>::is_nai( F<double>::text_to_decorated_interval("[1,2] ") ) );
     BOOST_CHECK_EQUAL(p1788::exception::state(), p1788::exception::undefined_operation_bit);
     p1788::exception::clear();
 
