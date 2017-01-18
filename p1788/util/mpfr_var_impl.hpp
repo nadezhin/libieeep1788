@@ -279,36 +279,44 @@ std::string mpfr_var<PREC_,EMIN_,EMAX_,SUBNORMALIZE_>::get_str(mpfr_rnd_t rnd,
         }
         break;
     case p1788::io::hex_representation:
-	if (precision == 0 && mpfr_number_p(var_))
-	{
+        if (precision == 0 && (mpfr_number_p(var_) || mpfr_zero_p(var_)))
+        {
             std::stringstream out;
             if (mpfr_signbit(var_)) out << '-';
             out << '0' << (text_rep == p1788::io::upper_case_text_representation ? 'X' : 'x');
-            mpz_t n;
-            mpz_init(n);
-            mpfr_exp_t exp0 = mpfr_get_z_2exp(n, var_);
-            mpz_abs(n, n);
-            mp_bitcnt_t nt = mpz_scan1(n, 0);
-            mpz_tdiv_q_2exp(n, n, nt);
-            exp0 += nt;
             mpfr_exp_t exp = std::max(mpfr_get_exp(var_), EMIN_ + PREC_ - 1);
-            int frac_bits = exp - exp0 - 1;
-            if (frac_bits % 4 != 0)
+            if (mpfr_zero_p(var_))
             {
-                mpz_mul_2exp(n, n, 4 - frac_bits % 4);
-                frac_bits += 4 - frac_bits % 4;
-            }
-            int hex_digits = frac_bits / 4 + 1;
-            char *buf = new char[hex_digits + 1];
-            mpz_get_str(buf, text_rep == p1788::io::upper_case_text_representation ? -16 : 16, n);
-            mpz_clear(n);
-            int pad = hex_digits - strlen(buf);
-            for (int i = 0; i < hex_digits; i++)
+                out << '0';
+                exp = 1; // to print 0x0p0
+            } else
             {
-                out << (i < pad ? '0' : buf[i - pad]);
-                if (i == 0 && hex_digits > 1) out << '.';
-            }
-            delete[] buf;
+		mpz_t n;
+		mpz_init(n);
+		mpfr_exp_t exp0 = mpfr_get_z_2exp(n, var_);
+		mpz_abs(n, n);
+		mp_bitcnt_t nt = mpz_scan1(n, 0);
+		mpz_tdiv_q_2exp(n, n, nt);
+		exp0 += nt;
+		mpfr_exp_t exp = std::max(mpfr_get_exp(var_), EMIN_ + PREC_ - 1);
+		int frac_bits = exp - exp0 - 1;
+		if (frac_bits % 4 != 0)
+		{
+		    mpz_mul_2exp(n, n, 4 - frac_bits % 4);
+		    frac_bits += 4 - frac_bits % 4;
+		}
+		int hex_digits = frac_bits / 4 + 1;
+		char *buf = new char[hex_digits + 1];
+		mpz_get_str(buf, text_rep == p1788::io::upper_case_text_representation ? -16 : 16, n);
+		mpz_clear(n);
+		int pad = hex_digits - strlen(buf);
+		for (int i = 0; i < hex_digits; i++)
+		{
+		    out << (i < pad ? '0' : buf[i - pad]);
+		    if (i == 0 && hex_digits > 1) out << '.';
+		}
+		delete[] buf;
+	    }
             out << (text_rep == p1788::io::upper_case_text_representation ? 'P' : 'p') << (exp - 1);
             std::string str = out.str();
             while (str.size() < width) str = " " + str;

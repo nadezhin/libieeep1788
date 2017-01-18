@@ -1193,6 +1193,7 @@ BOOST_AUTO_TEST_CASE(interval_to_exact_test)
     BOOST_CHECK_EQUAL( F<double>::interval_to_exact(REP<double>(std::stod("-0x1p-3"),std::stod("0x1p-3"))), "[-0x1p-3,0x1p-3]" );
     BOOST_CHECK_EQUAL( F<double>::interval_to_exact(REP<double>(std::stod("-0x1p-4"),std::stod("0x1p-4"))), "[-0x1p-4,0x1p-4]" );
     BOOST_CHECK_EQUAL( F<double>::interval_to_exact(REP<double>(std::stod("-0x1p-1030"),std::stod("0x1p-1030"))), "[-0x0.01p-1022,0x0.01p-1022]" );
+    BOOST_CHECK_EQUAL( F<double>::interval_to_exact(REP<double>(-0.0,+0.0)), "[-0x0p0,0x0p0]");
 }
 
 BOOST_AUTO_TEST_CASE(interval_to_dec_exact_test)
